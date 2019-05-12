@@ -1,0 +1,143 @@
+body {
+  background-color: black;
+  margin: 0;
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.console {
+  width: 250px;
+  border-right: 5px solid;
+  border-color: orange;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: white;
+}
+
+.console1 {
+  background-image: url(imgs/fallingcoins0.gif);
+  width: 250px;
+  border-right: 5px solid;
+  border-color: orange;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: white;
+}
+
+.console2 {
+  background-image: url(imgs/fallingcoins1.gif);
+  width: 250px;
+  border-right: 5px solid;
+  border-color: orange;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: white;
+}
+
+.console3 {
+  background-image: url(imgs/fallingcoins2.gif);
+  width: 250px;
+  border-right: 5px solid;
+  border-color: orange;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: white;
+}
+
+.coinDisplay {
+  height: 50vh;
+  color: white;
+  margin-bottom: -75px;
+  padding-top: 25px;
+}
+
+.coinButton {
+  all: unset;
+}
+
+.inventory {
+  display: flex;
+  flex: 1;
+  overflow: scroll;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.inventory > div {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-basis: 100%;
+  justify-content: flex-start;
+}
+
+.inventory > div > img {
+  max-height: 95px;
+  margin: 3px;
+}
+
+.shop {
+  width: 350px;
+  flex-direction: column;
+}
+
+.resourceButton {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  background-color: rgb(39, 39, 39);
+  border-left: 5px solid;
+  border-color: orange;
+  margin: 3px;
+}
+
+.resourceButtonVis {
+  display: flex;
+  opacity: 0.4;
+}
+
+.resourceButtonAvailable {
+  opacity: 1;
+}
+
+.resourceButton > img {
+  max-height: 95px;
+}
+
+.buytext {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  color: white;
+}
+
+.buytext > span {
+  flex-basis: 100%;
+}
+
+.buytext > img {
+  all: unset;
+  height: 25px;
+  width: 25px;
+  padding: 4px;
+}
+.circle {
+  width: 50px;
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 50%;
+  background: rgb(39, 39, 39);
+  border-color: orange;
+  box-shadow: 0px 0px 0px 5px orange;
+  margin-right: 15px;
+}
