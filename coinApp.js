@@ -72,15 +72,40 @@ let resources = [
       '/Users/avtargrewal/Decode/incremental-game-project/imgs/simulation.jpg',
   },
 ];
+let achievementBox1 = document.getElementById('achievement1');
+let achievementBox2 = document.getElementById('achievement2');
+let achievementBox3 = document.getElementById('achievement3');
+let achievementBox4 = document.getElementById('achievement4');
+let achievementBox5 = document.getElementById('achievement5');
+let achievementBox6 = document.getElementById('achievement6');
 let achievements = [
   {
-    message: 'Entrepreneur',
-    isComplete: function() {},
+    message: 'Entrepreneur!!!',
+    isComplete: function() {
+      if (resources[0].owned >= 5) {
+        //achievementBox.className = 'achievement';
+        let a = document.createTextNode(achievements[0].message);
+        achievementBox1.appendChild(a);
+        achievementBox1.className = 'achievementShow';
+        achievements[0].seen = true;
+      }
+    },
     seen: false,
   },
   {
     message: 'From rags to riches',
-    isComplete: function() {},
+    isComplete: function() {
+      if (resources[0].owned >= 8) {
+        //document.getElementById('award').innerHTML = '';
+        //achievementBox.className = 'achievement';
+        //achievementBox.removeAttribute('style');
+        //document.getElementsByClassName('closebtn').innerHTML = '&times;';
+        let a = document.createTextNode(achievements[1].message);
+        achievementBox2.appendChild(a);
+        achievementBox2.className = 'achievementShow';
+        achievements[1].seen = true;
+      }
+    },
     seen: false,
   },
   {
@@ -179,6 +204,33 @@ function updateResources() {
   }
 }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function bonusCoin() {
+  let body = document.querySelector('body');
+  let btn = document.getElementById('bonus');
+  let availW = body.offsetWidth - 150;
+  let availH = body.offsetHeight - 150;
+  btn.style.top = Math.round(Math.random() * availH);
+  btn.style.left = Math.round(Math.random() * availW);
+  btn.className = 'bonusCoinShow';
+  let bCoin = document.querySelector('.bonusCoinShow');
+  bCoin.addEventListener('click', () => {
+    let x = getRandomInt(2, 10) * cps;
+    coinTotal = coinTotal + x;
+    dissapearCoin();
+  });
+}
+
+function dissapearCoin() {
+  let bCoin = document.querySelector('.bonusCoinShow');
+  bCoin.className = 'bonusCoin';
+}
+
 function buyResource(resource) {
   if (coinTotal >= resource.cost) {
     coinTotal = coinTotal - resource.cost;
@@ -212,10 +264,32 @@ function changeBackground() {
   }
 }
 
+function checkAchievements() {
+  for (let i = 0; i < achievements.length; i++) {
+    if (achievements[i].seen === false) {
+      achievements[i].isComplete();
+    }
+  }
+}
+function setPointer() {
+  x = event.screenX;
+  y = event.screenY;
+}
+
 createResources();
 
 setInterval(() => {
   updateResources();
   addCoin();
   changeBackground();
+  checkAchievements();
 }, 10);
+
+setInterval(() => {
+  setTimeout(() => {
+    bonusCoin();
+    setTimeout(() => {
+      dissapearCoin();
+    }, 10000);
+  }, getRandomInt(0, 60000));
+}, 40000);
