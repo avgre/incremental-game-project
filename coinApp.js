@@ -1,6 +1,7 @@
 let cps = 0;
 let coinTotal = 0;
 let maxCoins = 0;
+let clicks = 0;
 let resources = [
   {
     name: 'Miner',
@@ -95,11 +96,7 @@ let achievements = [
   {
     message: 'From rags to riches',
     isComplete: function() {
-      if (resources[0].owned >= 8) {
-        //document.getElementById('award').innerHTML = '';
-        //achievementBox.className = 'achievement';
-        //achievementBox.removeAttribute('style');
-        //document.getElementsByClassName('closebtn').innerHTML = '&times;';
+      if (maxCoins >= 1000) {
         let a = document.createTextNode(achievements[1].message);
         achievementBox2.appendChild(a);
         achievementBox2.className = 'achievementShow';
@@ -110,25 +107,82 @@ let achievements = [
   },
   {
     message: 'Click madness',
-    isComplete: function() {},
+    isComplete: function() {
+      if (clicks >= 100) {
+        let a = document.createTextNode(achievements[2].message);
+        achievementBox3.appendChild(a);
+        achievementBox3.className = 'achievementShow';
+        achievements[2].seen = true;
+      }
+    },
     seen: false,
   },
   {
     message: 'Money rocket',
-    isComplete: function() {},
+    isComplete: function() {
+      if (cps >= 1000) {
+        let a = document.createTextNode(achievements[3].message);
+        achievementBox4.appendChild(a);
+        achievementBox4.className = 'achievementShow';
+        achievements[3].seen = true;
+      }
+    },
     seen: false,
   },
   {
     message: 'Singularity',
-    isComplete: function() {},
+    isComplete: function() {
+      if (resources[5].owned >= 1) {
+        let a = document.createTextNode(achievements[4].message);
+        achievementBox5.appendChild(a);
+        achievementBox5.className = 'achievementShow';
+        achievements[4].seen = true;
+      }
+    },
     seen: false,
   },
   {
     message: 'Ready for simulation',
-    isComplete: function() {},
+    isComplete: function() {
+      if (maxCoins >= resources[7].cost) {
+        let a = document.createTextNode(achievements[5].message);
+        achievementBox6.appendChild(a);
+        achievementBox6.className = 'achievementShow';
+        achievements[5].seen = true;
+      }
+    },
     seen: false,
   },
 ];
+
+function playCoinSound() {
+  let audio = new Audio(
+    '/Users/avtargrewal/Decode/incremental-game-project/sounds/coin.mp3'
+  );
+  audio.play();
+}
+
+function playResSound() {
+  let audio = new Audio(
+    '/Users/avtargrewal/Decode/incremental-game-project/sounds/buy.mp3'
+  );
+  audio.play();
+}
+
+function printCoin() {
+  let million = 1000000;
+  let billion = 1000000000;
+  if (coinTotal <= million) {
+    document.getElementById('coinCount').textContent =
+      Math.round(coinTotal) + ' Coins';
+  } else if (coinTotal > million && coinTotal < billion) {
+    document.getElementById('coinCount').textContent =
+      Math.round((coinTotal / million) * 100) / 100 + 'M Coins';
+  } else {
+    document.getElementById('coinCount').textContent =
+      Math.round((coinTotal / billion) * 100) / 100 + 'B Coins';
+  }
+}
 
 let coinButton = document.querySelector('.coinButton');
 let coinDisplay = document.querySelector('.coinDisplay');
@@ -137,17 +191,23 @@ let shop = document.querySelector('.shop');
 let inventory = document.querySelector('.inventory');
 coinButton.addEventListener('click', () => {
   if (cps <= 1) {
+    clicks = clicks + 1;
+    playCoinSound();
     coinTotal = coinTotal + 1;
     maxCoins = maxCoins + 1;
-    document.getElementById('coinCount').textContent =
-      Math.round(coinTotal) + ' Coins';
+    printCoin();
   } else {
+    clicks = clicks + 1;
+    playCoinSound();
     coinTotal = coinTotal + cps;
     maxCoins = maxCoins + cps;
-    document.getElementById('coinCount').textContent =
-      Math.round(coinTotal) + ' Coins';
+    printCoin();
   }
 });
+
+function restart() {
+  document.location.reload();
+}
 
 function createResource(i) {
   let resource = document.createElement('div');
@@ -174,7 +234,13 @@ function createResource(i) {
   resource.appendChild(textdiv);
   resource.appendChild(circle);
   resource.addEventListener('click', () => {
-    buyResource(resources[i]);
+    if (i <= 6) {
+      buyResource(resources[i]);
+      clicks = clicks + 1;
+      playResSound();
+    } else if ((i = 7)) {
+      restart();
+    }
   });
   return resource;
 }
@@ -218,16 +284,20 @@ function bonusCoin() {
   btn.style.top = Math.round(Math.random() * availH);
   btn.style.left = Math.round(Math.random() * availW);
   btn.className = 'bonusCoinShow';
-  let bCoin = document.querySelector('.bonusCoinShow');
+  let bCoin = document.getElementById('bonus');
   bCoin.addEventListener('click', () => {
+    clicks = clicks + 1;
     let x = getRandomInt(2, 10) * cps;
     coinTotal = coinTotal + x;
+    maxCoins = maxCoins + x;
+    playCoinSound();
+    printCoin();
     dissapearCoin();
   });
 }
 
 function dissapearCoin() {
-  let bCoin = document.querySelector('.bonusCoinShow');
+  let bCoin = document.getElementById('bonus');
   bCoin.className = 'bonusCoin';
 }
 
@@ -242,14 +312,14 @@ function buyResource(resource) {
     if (resource.owned <= 20) {
       row.appendChild(picture);
     }
-    document.getElementById('coinCount').textContent = coinTotal + ' Coins';
+    printCoin();
   }
 }
 
 function addCoin() {
   coinTotal = coinTotal + cps / 100;
-  document.getElementById('coinCount').textContent =
-    Math.round(coinTotal) + ' Coins';
+  maxCoins = maxCoins + cps / 100;
+  printCoin();
 }
 
 function changeBackground() {

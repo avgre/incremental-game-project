@@ -5,6 +5,9 @@ body {
   text-align: center;
   justify-content: space-between;
   z-index: 0;
+  font-family: monospace;
+  font-size: 18px;
+  color: white;
 }
 
 .console {
@@ -60,6 +63,12 @@ body {
 .coinButton {
   all: unset;
 }
+
+.coinButton:hover {
+  background-color: #000;
+  transform: scale(1.2) perspective(1px);
+}
+
 .bonusCoin {
   display: none;
   top: 0;
@@ -89,11 +98,13 @@ body {
   flex-wrap: nowrap;
   justify-content: flex-start;
   flex-basis: 100%;
+  height: 95px;
 }
 
 .inventory > div > img {
   max-height: 95px;
   margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 .shop {
@@ -109,12 +120,26 @@ body {
   background-color: rgb(39, 39, 39);
   border-left: 5px solid;
   border-color: orange;
-  margin: 3px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 .resourceButtonVis {
   display: flex;
   opacity: 0.4;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+.resourceButtonVis:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.resourceButtonAvailable:hover {
+  background-color: #3e8e41;
 }
 
 .resourceButtonAvailable {
@@ -159,8 +184,8 @@ body {
 
 .achievement {
   display: none;
-  height: 100px;
-  width: 350px;
+  height: 40px;
+  width: 200px;
   position: absolute;
   padding: 20px;
   background-color: dodgerblue;
@@ -174,8 +199,8 @@ body {
 
 .achievementShow {
   display: block;
-  height: 50px;
-  width: 250px;
+  height: 40px;
+  width: 200px;
   position: absolute;
   padding: 20px;
   background-color: dodgerblue;
@@ -183,8 +208,9 @@ body {
   z-index: 1;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  transform-origin: (-50%, 0%);
+  font-size: 14px;
 }
 .closebtn {
   margin-left: 15px;
