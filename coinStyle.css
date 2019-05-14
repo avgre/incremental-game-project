@@ -197,6 +197,18 @@ body {
   transform: translate(-50%, -50%);
 }
 
+@keyframes move {
+  0% {
+    transform: scale(1) translate(-50%, -50%);
+  }
+  50% {
+    transform: scale(1.5) translate(-50%, -50%);
+  }
+  100% {
+    transform: scale(1) translate(-50%, -50%);
+  }
+}
+
 .achievementShow {
   display: block;
   height: 40px;
@@ -209,7 +221,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  transform-origin: (-50%, 0%);
+  animation: move 1s ease-in;
   font-size: 14px;
 }
 .closebtn {
